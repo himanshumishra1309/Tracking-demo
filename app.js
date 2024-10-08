@@ -28,10 +28,17 @@ app.set('view engine', 'ejs');
 
 // Serve the homepage
 app.get('/', (req, res) => {
-    res.render('index'); // Render 'index.ejs'
+    try {
+        res.render('index'); // Render 'index.ejs'
+    } catch (error) {
+        console.error('Error rendering index:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
-// Start the server
-server.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
+
+const PORT = process.env.PORT || 3000; // Use Vercel's dynamic port or default to 3000 for local
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
+
